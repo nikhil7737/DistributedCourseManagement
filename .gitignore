@@ -1,0 +1,7 @@
+CommandService/src/CommandService/bin
+CommandService/src/CommandService/obj
+CommandService/src/CommandService/Readme.md
+CommandService/src/CommandService/serverless.template
+
+CommandService/test/CommandService.Tests/bin
+CommandService/test/CommandService.Tests/obj
