@@ -1,4 +1,7 @@
-﻿namespace CommandService;
+﻿using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DataModel;
+
+namespace CommandService;
 
 public class Startup
 {
@@ -13,6 +16,8 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
+        services.AddAWSService<IAmazonDynamoDB>();
+        services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
