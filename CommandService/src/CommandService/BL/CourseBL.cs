@@ -28,8 +28,17 @@ namespace CommandService.BL
                     InstructorId = command.InstructorId
                 }
             };
-            await _repo.PesistCourseCreatedEvent(courseCreatedEvent);
-            // await _repo.PesistCourseCreatedEvent(courseCreatedEvent);
+            await _repo.PesistCourseEvent(courseCreatedEvent);
+        }
+        public async Task Execute(DeleteCourseCommand command)
+        {
+            var courseDeletedEvent = new CourseEvent
+            {
+                CourseId = Guid.NewGuid().ToString(),
+                SequenceNo = await _repo.GetLastSequenceNo(command.CourseId) + 1,
+                Type = CourseEventEnum.Deleted,
+            };
+            await _repo.PesistCourseEvent(courseDeletedEvent);
         }
     }
 }

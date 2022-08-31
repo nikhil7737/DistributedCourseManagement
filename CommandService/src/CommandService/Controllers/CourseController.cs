@@ -28,12 +28,20 @@ public class CourseController : ControllerBase
     }
 
     [HttpDelete]
-    public void Delete(CreateCourseCommand createCommand)
+    public async Task Delete(DeleteCourseCommand deleteCommand)
     {
+        if (ValidateDeleteCourseCommand(deleteCommand))
+        {
+            await _courseBL.Execute(deleteCommand);
+        }
     }
 
     private static bool ValidateCreateCourseCommand(CreateCourseCommand createCommand)
     {
         return !(createCommand.Name.IsNullOrEmpty() || createCommand.Description.IsNullOrEmpty() || createCommand.InstructorId.IsNullOrEmpty());
+    }
+    private static bool ValidateDeleteCourseCommand(DeleteCourseCommand deleteCommand)
+    {
+        return !deleteCommand.CourseId.IsNullOrEmpty();
     }
 }

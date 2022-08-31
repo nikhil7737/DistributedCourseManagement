@@ -5,5 +5,6 @@ namespace CommandService.BL.Interfaces
     public interface ICourseBL
     {
         Task Execute(CreateCourseCommand command);
+        Task Execute(DeleteCourseCommand command);
     }
 }

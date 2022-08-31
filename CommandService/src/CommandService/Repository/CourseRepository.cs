@@ -18,16 +18,16 @@ namespace CommandService.Repository
             _dbContext = dbContext;
             _dynamoDbClient = dynamoDbClient;
         }
-        public async Task PesistCourseCreatedEvent(CourseEvent courseCreatedEvent)
+        public async Task PesistCourseEvent(CourseEvent courseEvent)
         {
             try
             {
                 var outbox = new CourseOutbox
                 {
-                    CourseId = courseCreatedEvent.CourseId,
+                    CourseId = courseEvent.CourseId,
                     Status = EventStatus.UnProcessed
                 };
-                await _dbContext.SaveAsync<CourseEvent>(courseCreatedEvent);
+                await _dbContext.SaveAsync<CourseEvent>(courseEvent);
                 await _dbContext.SaveAsync<CourseOutbox>(outbox);
             }
             catch (Exception e)

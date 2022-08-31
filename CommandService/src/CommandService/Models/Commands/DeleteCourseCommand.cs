@@ -2,6 +2,6 @@ namespace CommandService.Models.Commands
 {
     public class DeleteCourseCommand
     {
-        public string Id { get; set; }
+        public string CourseId { get; set; }
     }
 }

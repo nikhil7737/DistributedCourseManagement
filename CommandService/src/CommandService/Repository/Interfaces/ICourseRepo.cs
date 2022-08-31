@@ -4,7 +4,7 @@ namespace CommandService.Repository.Interfaces
 {
     public interface ICourseRepo
     {
-        Task PesistCourseCreatedEvent(CourseEvent courseCreatedEvent);
+        Task PesistCourseEvent(CourseEvent courseCreatedEvent);
         Task<int> GetLastSequenceNo(string courseId);
     }
 }
