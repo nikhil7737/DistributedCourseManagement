@@ -1,5 +1,11 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using Amazon.Runtime;
+using Amazon.Runtime.CredentialManagement;
+using CommandService.BL;
+using CommandService.BL.Interfaces;
+using CommandService.Repository;
+using CommandService.Repository.Interfaces;
 
 namespace CommandService;
 
@@ -18,6 +24,13 @@ public class Startup
         services.AddControllers();
         services.AddAWSService<IAmazonDynamoDB>();
         services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
+        var chain = new CredentialProfileStoreChain();
+        AWSCredentials awsCredentials;
+        chain.TryGetAWSCredentials("Nikhil", out awsCredentials);
+        services.AddSingleton<IAmazonDynamoDB>(new AmazonDynamoDBClient(awsCredentials));
+
+        services.AddScoped<ICourseBL, CourseBL>();
+        services.AddScoped<ICourseRepo, CourseRepo>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
