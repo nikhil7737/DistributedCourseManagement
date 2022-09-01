@@ -25,7 +25,7 @@ namespace CommandService.Repository
                 var outbox = new CourseOutbox
                 {
                     CourseId = courseEvent.CourseId,
-                    Status = EventStatus.UnProcessed
+                    SequenceNo = courseEvent.SequenceNo
                 };
                 await _dbContext.SaveAsync<CourseEvent>(courseEvent);
                 await _dbContext.SaveAsync<CourseOutbox>(outbox);

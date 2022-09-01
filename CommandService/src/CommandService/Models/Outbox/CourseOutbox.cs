@@ -7,6 +7,6 @@ namespace CommandService.Models.Outbox
     public class CourseOutbox
     {
         public string CourseId { get; set; }
-        public EventStatus Status { get; set; }
+        public int SequenceNo { get; set; }
     }
 }
