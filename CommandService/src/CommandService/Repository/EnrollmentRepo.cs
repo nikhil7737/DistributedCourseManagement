@@ -23,7 +23,7 @@ public class EnrollmentRepo : IEnrollmentRepo
             var outbox = new EnrollmentOutbox
             {
                 AggregateId = enrollmentEvent.AggregateId,
-                Status = EventStatus.UnProcessed
+                SequenceNo = enrollmentEvent.SequenceNo
             };
             await _dbContext.SaveAsync<EnrollmentEvent>(enrollmentEvent);
             await _dbContext.SaveAsync<EnrollmentOutbox>(outbox);
@@ -31,6 +31,28 @@ public class EnrollmentRepo : IEnrollmentRepo
         catch (Exception e)
         {
             Console.WriteLine(e);
+        }
+    }
+
+    public async Task<int> GetLastSequenceNo(string aggregateId)
+    {
+        try
+        {
+            var queryConfig = new QueryOperationConfig
+            {
+                Limit = 1,
+                Filter = new QueryFilter("aggregateId", QueryOperator.Equal, new List<AttributeValue>() { new AttributeValue(aggregateId) }),
+                BackwardSearch = false,
+                Select = SelectValues.SpecificAttributes,
+                AttributesToGet = new List<string> { "sequenceNo" },
+            };
+            var response = _dbContext.FromQueryAsync<EnrollmentEvent>(queryConfig);
+            var events = await response.GetNextSetAsync();
+            return events.Count == 0 ? 0 : events.First().SequenceNo;
+        }
+        catch (Exception e)
+        {
+            return 0;
         }
     }
 }

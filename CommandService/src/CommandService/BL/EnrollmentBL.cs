@@ -8,13 +8,24 @@ namespace CommandService.BL;
 
 public class EnrollmentBL : IEnrollmentBL
 {
-    private readonly ICourseRepo _repo;
-    public EnrollmentBL(ICourseRepo repo)
+    private readonly IEnrollmentRepo _repo;
+    public EnrollmentBL(IEnrollmentRepo repo)
     {
         _repo = repo;
     }
     public async Task Execute(EnrollmentCommand command)
     {
-        
+        string aggregateId = $"{command.StudentId}-{command.CourseId}";
+        var enrollmentEvent = new EnrollmentEvent
+        {
+            AggregateId = aggregateId,
+            SequenceNo = await _repo.GetLastSequenceNo(aggregateId) + 1,
+            Type = command.Type,
+            Enrollment = new () {
+                StudentId = command.StudentId,
+                CourseId = command.CourseId
+            }
+        };
+        await _repo.PesistEnrollmentEvent(enrollmentEvent);
     }
 }

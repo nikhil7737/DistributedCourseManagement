@@ -6,4 +6,5 @@ namespace CommandService.Repository.Interfaces;
 public interface IEnrollmentRepo
 {
     Task PesistEnrollmentEvent(EnrollmentEvent enrollmentEvent);
+    Task<int> GetLastSequenceNo(string aggregateId);
 }
