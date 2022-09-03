@@ -3,7 +3,7 @@ using CommandService.Repository.Interfaces;
 using CommandService.Models.Events;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
-using Common.Outbox;
+using Common;
 
 namespace CommandService.Repository;
 public class EnrollmentRepo : IEnrollmentRepo
@@ -17,13 +17,13 @@ public class EnrollmentRepo : IEnrollmentRepo
     {
         try
         {
-            var outbox = new EnrollmentOutbox
+            var outbox = new Outbox
             {
                 AggregateId = enrollmentEvent.AggregateId,
-                SequenceNo = enrollmentEvent.SequenceNo
+                EventType = EventType.Enrollment
             };
             await _dbContext.SaveAsync<EnrollmentEvent>(enrollmentEvent);
-            await _dbContext.SaveAsync<EnrollmentOutbox>(outbox);
+            await _dbContext.SaveAsync<Outbox>(outbox);
         }
         catch (Exception e)
         {

@@ -4,7 +4,7 @@ using Amazon.DynamoDBv2;
 using CommandService.Models.Events;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
-using Common.Outbox;
+using Common;
 
 namespace CommandService.Repository
 {
@@ -21,13 +21,14 @@ namespace CommandService.Repository
         {
             try
             {
-                var outbox = new CourseOutbox
+                var outbox = new Outbox
                 {
-                    CourseId = courseEvent.CourseId,
-                    SequenceNo = courseEvent.SequenceNo
+                    OutboxId = Guid.NewGuid().ToString(),
+                    AggregateId = courseEvent.CourseId,
+                    EventType = EventType.Course,
                 };
                 await _dbContext.SaveAsync<CourseEvent>(courseEvent);
-                await _dbContext.SaveAsync<CourseOutbox>(outbox);
+                await _dbContext.SaveAsync<Outbox>(outbox);
             }
             catch (Exception e)
             {
