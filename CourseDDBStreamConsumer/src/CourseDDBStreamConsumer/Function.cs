@@ -8,6 +8,7 @@ using Amazon.EventBridge;
 using Amazon.EventBridge.Model;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.DynamoDBEvents;
+using Common.Outbox;
 using CourseDDBStreamConsumer.Model;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
