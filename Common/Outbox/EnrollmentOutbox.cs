@@ -1,7 +1,6 @@
 using Amazon.DynamoDBv2.DataModel;
-using CommandService.Enums;
 
-namespace CommandService.Models.Outbox
+namespace Common.Outbox
 {
     [DynamoDBTable("EnrollmentOutbox", lowerCamelCaseProperties: true)]
     public class EnrollmentOutbox

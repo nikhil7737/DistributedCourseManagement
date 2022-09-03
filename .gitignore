@@ -8,3 +8,6 @@ CommandService/test/CommandService.Tests/obj
 
 CourseDDBStreamConsumer/src/CourseDDBStreamConsumer/bin
 CourseDDBStreamConsumer/src/CourseDDBStreamConsumer/obj
+
+Common/bin
+Common/obj

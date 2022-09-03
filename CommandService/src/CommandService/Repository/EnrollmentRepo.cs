@@ -1,12 +1,9 @@
 using Amazon.DynamoDBv2.DataModel;
 using CommandService.Repository.Interfaces;
-using Amazon.DynamoDBv2;
 using CommandService.Models.Events;
-using CommandService.Models.Outbox;
-using CommandService.Enums;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
-using CommandService.Models.Commands;
+using Common.Outbox;
 
 namespace CommandService.Repository;
 public class EnrollmentRepo : IEnrollmentRepo
