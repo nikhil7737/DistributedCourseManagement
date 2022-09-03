@@ -32,7 +32,8 @@ public class StreamConsumer
             Outbox outboxEvent = GetOutboxEvent(record.Dynamodb.NewImage);
             if (await SendEventToEventBridge(outboxEvent))
             {
-                await _dbContext.DeleteAsync<Outbox>(outboxEvent);
+                //mark processed. If I delete then streams are again fired
+                // await _dbContext.DeleteAsync<Outbox>(outboxEvent);
             }
         }
         catch (Exception e)
@@ -49,6 +50,7 @@ public class StreamConsumer
 
     private async Task<bool> SendEventToEventBridge(Outbox outbox)
     {
+        Console.WriteLine($"event us name: {GetEventBus(outbox.EventType)}");
         var eventBridgeClient = new AmazonEventBridgeClient();
         var response = await eventBridgeClient.PutEventsAsync(new PutEventsRequest
         {
@@ -56,7 +58,9 @@ public class StreamConsumer
                 new ()
                 {
                     EventBusName = GetEventBus(outbox.EventType),
-                    Detail = JsonSerializer.Serialize(outbox)
+                    Detail = JsonSerializer.Serialize(outbox),
+                    Source = "DDBStreamConsumer.StreamConsumer",
+                    DetailType = "courseEvent",
                 }
             }
         });
