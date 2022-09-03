@@ -10,31 +10,29 @@ using Amazon.Lambda.Core;
 using Amazon.Lambda.DynamoDBEvents;
 using Common;
 
-// Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace CourseDDBStreamConsumer;
+namespace DDBStreamConsumer;
 
-public class Function
+public class StreamConsumer
 {
     private const string _courseEventBus = "CourseEvents";
     private const string _enrollmentEventBus = "EnrollmentEvents";
     private readonly IDynamoDBContext _dbContext;
-    public Function()
+    public StreamConsumer()
     {
         var client = new AmazonDynamoDBClient();
         _dbContext = new DynamoDBContext(client);
     }
-    public async Task FunctionHandler(DynamoDBEvent dbEvent, ILambdaContext context)
+    public async Task Consume(DynamoDBEvent dbEvent, ILambdaContext context)
     {
         try
         {
             var record = dbEvent.Records.First();
-            var outboxEvent = GetOutboxEvent(record.Dynamodb.Keys);
+            Outbox outboxEvent = GetOutboxEvent(record.Dynamodb.NewImage);
             if (await SendEventToEventBridge(outboxEvent))
             {
-                Console.WriteLine("message sent to event bridge");
-                // await _dbContext.DeleteAsync<Outbox>(outboxEvent);
+                await _dbContext.DeleteAsync<Outbox>(outboxEvent);
             }
         }
         catch (Exception e)
