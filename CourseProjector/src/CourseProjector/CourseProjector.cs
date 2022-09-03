@@ -2,6 +2,7 @@ using System.Text.Json;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.Lambda.Core;
+using Common.ExtensionMethods;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
@@ -18,6 +19,10 @@ public class CourseProjector
     public async Task Project(EBEvent ebEvent, ILambdaContext context)
     {
         string outboxId = ebEvent?.detail?.OutboxId;
+        if (outboxId.IsNullOrEmpty())
+        {
+            return;
+        }
         if (await IsEventProcessed(outboxId))
         {
             return;
