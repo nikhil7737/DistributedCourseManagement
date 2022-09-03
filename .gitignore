@@ -5,3 +5,6 @@ CommandService/src/CommandService/serverless.template
 
 CommandService/test/CommandService.Tests/bin
 CommandService/test/CommandService.Tests/obj
+
+CourseDDBStreamConsumer/src/CourseDDBStreamConsumer/bin
+CourseDDBStreamConsumer/src/CourseDDBStreamConsumer/obj
