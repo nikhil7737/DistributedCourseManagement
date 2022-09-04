@@ -4,7 +4,6 @@ using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.Lambda.Core;
 using Common;
-using Common.Enums;
 using Common.Events;
 using Common.ExtensionMethods;
 using Common.ReadModels;
@@ -45,6 +44,8 @@ public class CourseProjector
             //Transaction
             await PersistReadModel(courseByInstructor);
             await MarkEventProcessed(outboxId);
+
+            await HandleSnapshotPersistence(courseByInstructor, eventsToApply.Last().SequenceNo);
         }
         catch (Exception e)
         {
@@ -54,6 +55,19 @@ public class CourseProjector
     }
 
     //repo methods
+    private async Task HandleSnapshotPersistence(CourseByInstructor courseByInstructor, int sequenceNo)
+    {
+        if (sequenceNo % _snapshotInterval == 0)
+        {
+            await _dbContext.SaveAsync<Snapshot>(new Snapshot
+            {
+                AggregateId = courseByInstructor.CourseId,
+                LastSequenceNo = sequenceNo,
+                SerializedState = JsonSerializer.Serialize(courseByInstructor)
+            });
+        }
+    }
+
     private async Task MarkEventProcessed(string outboxId)
     {
         await _dbContext.SaveAsync<ProcessedOutboxEvent>(new ProcessedOutboxEvent(outboxId));
