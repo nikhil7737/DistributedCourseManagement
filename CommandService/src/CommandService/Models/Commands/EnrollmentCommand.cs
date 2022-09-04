@@ -1,4 +1,4 @@
-using CommandService.Enums;
+using Common.Enums;
 
 namespace CommandService.Models.Commands;
 

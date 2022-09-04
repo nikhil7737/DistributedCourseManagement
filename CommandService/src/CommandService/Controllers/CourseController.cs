@@ -2,7 +2,7 @@ using Amazon.DynamoDBv2.DataModel;
 using CommandService.BL.Interfaces;
 using Common.ExtensionMethods;
 using CommandService.Models.Commands;
-using CommandService.Models.Entity;
+using Common.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommandService.Controllers;

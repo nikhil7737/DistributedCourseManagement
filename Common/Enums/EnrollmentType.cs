@@ -1,4 +1,4 @@
-namespace CommandService.Enums
+namespace Common.Enums
 {
     public enum EnrollmentType
     {

@@ -1,7 +1,7 @@
 using CommandService.BL.Interfaces;
-using CommandService.Enums;
+using Common.Enums;
 using CommandService.Models.Commands;
-using CommandService.Models.Events;
+using Common.Events;
 using CommandService.Repository.Interfaces;
 
 namespace CommandService.BL

@@ -1,4 +1,4 @@
-using CommandService.Models.Events;
+using Common.Events;
 
 namespace CommandService.Repository.Interfaces
 {

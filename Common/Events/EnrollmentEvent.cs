@@ -1,8 +1,8 @@
 using Amazon.DynamoDBv2.DataModel;
-using CommandService.Enums;
-using CommandService.Models.Entity;
+using Common.Enums;
+using Common.Entity;
 
-namespace CommandService.Models.Events;
+namespace Common.Events;
 
 [DynamoDBTable("EnrollmentEvent", lowerCamelCaseProperties: true)]
 public class EnrollmentEvent

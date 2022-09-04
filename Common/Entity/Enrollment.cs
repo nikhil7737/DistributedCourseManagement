@@ -1,4 +1,4 @@
-namespace CommandService.Models.Entity
+namespace Common.Entity
 {
     public class Enrollment
     {
