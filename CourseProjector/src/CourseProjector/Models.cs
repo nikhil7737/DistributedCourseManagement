@@ -11,4 +11,8 @@ public class EBEvent
 public class ProcessedOutboxEvent
 {
     public string OutboxId { get; set; }
+    public ProcessedOutboxEvent(string outboxId)
+    {
+        OutboxId = outboxId;
+    }
 }

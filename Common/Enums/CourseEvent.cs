@@ -3,7 +3,9 @@ namespace Common.Enums
     public enum CourseEventEnum
     {
         Created = 1,
-        Updated = 2,
-        Deleted = 3,
+        NameUpdated = 2,
+        MaxEnrollmentCountUpdated = 3,
+        FeesUpdated = 4,
+        Deleted = 5,
     }
 }
