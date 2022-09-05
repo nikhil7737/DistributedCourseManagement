@@ -19,6 +19,7 @@ public class EnrollmentRepo : IEnrollmentRepo
         {
             var outbox = new Outbox
             {
+                OutboxId = Guid.NewGuid().ToString(),
                 AggregateId = enrollmentEvent.AggregateId,
                 EventType = EventType.Enrollment
             };
