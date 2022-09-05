@@ -1,6 +1,6 @@
 using Common;
 
-namespace CourseProjector;
+namespace Common.EBModels;
 
 public class EBEvent
 {

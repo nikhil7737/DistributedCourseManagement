@@ -7,6 +7,7 @@ using Common;
 using Common.Events;
 using Common.ExtensionMethods;
 using Common.ReadModels;
+using Common.EBModels;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
