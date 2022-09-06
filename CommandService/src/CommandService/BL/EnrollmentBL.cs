@@ -23,7 +23,8 @@ public class EnrollmentBL : IEnrollmentBL
             Type = command.Type,
             Enrollment = new () {
                 StudentId = command.StudentId,
-                CourseId = command.CourseId
+                CourseId = command.CourseId,
+                Date = DateTime.Now,
             }
         };
         await _repo.PesistEnrollmentEvent(enrollmentEvent);

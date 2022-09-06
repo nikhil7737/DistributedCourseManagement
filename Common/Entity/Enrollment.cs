@@ -4,5 +4,6 @@ namespace Common.Entity
     {
         public string StudentId { get; set; }
         public string CourseId { get; set; }
+        public DateTime Date { get; set; }
     }
 }
