@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Amazon.DynamoDBv2.DataModel;
 using Common.Entity;
 using Common.Enums;
@@ -12,14 +14,10 @@ public class CourseByStudent
     public string CourseId { get; set; }
     public string CourseName { get; set; }
     public string CurrentStatus { get; set; }
-    public string FirstEnrollmentDate { get; set; }
     public int UnenrollmentCount { get; set; }
-    public int AvgMinutesToUnenroll { get; set; }
-
-    [DynamoDBIgnore]
-    private int TotalTimeInEnrolledState { get; set; }
-    [DynamoDBIgnore]
-    private string LastEnrollmentDate { get; set; }
+    public string AvgTimeToUnenroll { get; set; }
+    [JsonIgnore]
+    public DateTime LastEnrollmentDate { get; set; }
 
     public void ApplyEvent(EnrollmentEvent enrollmentEvent)
     {
@@ -41,14 +39,21 @@ public class CourseByStudent
     }
     private void ApplyEnrolledEvent(Enrollment eventData)
     {
-        throw new NotImplementedException();
+        LastEnrollmentDate = eventData.Date;
+        CurrentStatus = "Enrolled";
     }
     private void ApplyUnenrolledEvent(Enrollment eventData)
     {
-        throw new NotImplementedException();
+        TimeSpan avgTimeToUnenroll = JsonSerializer.Deserialize<TimeSpan>(this.AvgTimeToUnenroll);
+        TimeSpan totalTimeInEnrolledState = avgTimeToUnenroll * UnenrollmentCount;
+        totalTimeInEnrolledState += eventData.Date - LastEnrollmentDate;
+        ++UnenrollmentCount;
+        avgTimeToUnenroll = totalTimeInEnrolledState.Divide(UnenrollmentCount);
+        this.AvgTimeToUnenroll = JsonSerializer.Serialize(avgTimeToUnenroll);
+        CurrentStatus = "Unenrolled";
     }
     private void ApplyFinishedEvent(Enrollment eventData)
     {
-        throw new NotImplementedException();
+        CurrentStatus = "Finished";
     }
 }
