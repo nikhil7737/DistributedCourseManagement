@@ -17,3 +17,6 @@ CourseProjector/src/CourseProjector/obj
 
 CoursesByStudentProjector/src/CoursesByStudentProjector/bin
 CoursesByStudentProjector/src/CoursesByStudentProjector/obj
+
+QueryService/bin
+QueryService/obj
