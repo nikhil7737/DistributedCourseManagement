@@ -16,7 +16,7 @@ public class CourseController : ControllerBase
         _repo = repo;
     }
 
-    [HttpGet("instructor")]
+    [HttpGet("instructor/{instructorId}")]
     public async Task<IActionResult> GetCoursesByInstructorId(string instructorId)
     {
         try
