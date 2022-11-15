@@ -12,8 +12,8 @@ DDBStreamConsumer/src/DDBStreamConsumer/obj
 Common/bin
 Common/obj
 
-CourseProjector/src/CourseProjector/bin
-CourseProjector/src/CourseProjector/obj
+CoursesByInstructorProjector/src/CoursesByInstructorProjector/bin
+CoursesByInstructorProjector/src/CoursesByInstructorProjector/obj
 
 CoursesByStudentProjector/src/CoursesByStudentProjector/bin
 CoursesByStudentProjector/src/CoursesByStudentProjector/obj

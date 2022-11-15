@@ -11,13 +11,13 @@ using Common.EBModels;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace CourseProjector;
+namespace CoursesByInstructorProjector;
 
-public class CourseProjector
+public class CoursesByInstructorProjector
 {
     private const int _snapshotInterval = 3;
     private readonly IDynamoDBContext _dbContext;
-    public CourseProjector()
+    public CoursesByInstructorProjector()
     {
         var client = new AmazonDynamoDBClient();
         _dbContext = new DynamoDBContext(client);
