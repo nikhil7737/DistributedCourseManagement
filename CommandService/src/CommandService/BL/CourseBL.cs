@@ -34,7 +34,7 @@ namespace CommandService.BL
         {
             var courseDeletedEvent = new CourseEvent
             {
-                CourseId = Guid.NewGuid().ToString(),
+                CourseId = command.CourseId,
                 SequenceNo = await _repo.GetLastSequenceNo(command.CourseId) + 1,
                 Type = CourseEventEnum.Deleted,
             };

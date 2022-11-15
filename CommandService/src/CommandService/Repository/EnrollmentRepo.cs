@@ -40,7 +40,7 @@ public class EnrollmentRepo : IEnrollmentRepo
             {
                 Limit = 1,
                 Filter = new QueryFilter("aggregateId", QueryOperator.Equal, new List<AttributeValue>() { new AttributeValue(aggregateId) }),
-                BackwardSearch = false,
+                BackwardSearch = true,
                 Select = SelectValues.SpecificAttributes,
                 AttributesToGet = new List<string> { "sequenceNo" },
             };

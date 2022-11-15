@@ -43,7 +43,7 @@ namespace CommandService.Repository
                 {
                     Limit = 1,
                     Filter = new QueryFilter("courseId", QueryOperator.Equal, new List<AttributeValue>() { new AttributeValue(courseId) }),
-                    BackwardSearch = false,
+                    BackwardSearch = true,
                     Select = SelectValues.SpecificAttributes,
                     AttributesToGet = new List<string> { "sequenceNo" },
                 };
