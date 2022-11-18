@@ -39,12 +39,15 @@ public class CourseByStudent
     }
     private void ApplyEnrolledEvent(Enrollment eventData)
     {
+        StudentId = eventData.StudentId;
+        CourseId = eventData.CourseId;
         LastEnrollmentDate = eventData.Date;
         CurrentStatus = "Enrolled";
     }
     private void ApplyUnenrolledEvent(Enrollment eventData)
     {
-        TimeSpan avgTimeToUnenroll = JsonSerializer.Deserialize<TimeSpan>(this.AvgTimeToUnenroll);
+        TimeSpan avgTimeToUnenroll = string.IsNullOrEmpty(this.AvgTimeToUnenroll) ? 
+            new TimeSpan(ticks: 0) : JsonSerializer.Deserialize<TimeSpan>(this.AvgTimeToUnenroll);
         TimeSpan totalTimeInEnrolledState = avgTimeToUnenroll * UnenrollmentCount;
         totalTimeInEnrolledState += eventData.Date - LastEnrollmentDate;
         ++UnenrollmentCount;

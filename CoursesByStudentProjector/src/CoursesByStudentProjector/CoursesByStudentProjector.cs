@@ -72,7 +72,10 @@ public class CoursesByStudentProjector
 
     private async Task MarkEventProcessed(string outboxId)
     {
-        await _dbContext.SaveAsync<ProcessedOutboxEvent>(new ProcessedOutboxEvent(outboxId));
+        await _dbContext.SaveAsync<ProcessedOutboxEvent>(new ProcessedOutboxEvent
+        {
+            OutboxId = outboxId
+        });
     }
 
     private async Task PersistReadModel(CourseByStudent finalState)
@@ -92,7 +95,7 @@ public class CoursesByStudentProjector
         (
             aggregateId,
             QueryOperator.GreaterThanOrEqual,
-            new List<string> { startSequenceNo.ToString() }
+            new List<object> { startSequenceNo }
         );
         var events = await searchResult.GetRemainingAsync();
         return events;
